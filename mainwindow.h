@@ -3,7 +3,10 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <QTimer>
 #include <thread>
+
+#include "udp-s.h"
 
 using namespace std;
 
@@ -19,11 +22,17 @@ class MainWindow : public QMainWindow
         MainWindow(QWidget *parent = nullptr);
         ~MainWindow();
         
+    private slots:        
+        void Blinking ();
+        void on_pushButton_clicked();        
+        
     private:
         Ui::MainWindow *ui;
         QGraphicsScene scene;
-        std::thread *thr_blinking;
+        //std::thread *thr_blinking;
         QGraphicsRectItem* item1;
-        void Blinking ();
+        QTimer qtimer;
+        QGraphicsSimpleTextItem* axels;
+        
 };
 #endif // MAINWINDOW_H

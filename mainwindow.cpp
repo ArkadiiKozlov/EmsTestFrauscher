@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 #include <QGraphicsItem>
+#include <QString>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -15,7 +16,12 @@ MainWindow::MainWindow(QWidget *parent)
     item1 = new QGraphicsRectItem(50,50,400,25); 	
     scene.addItem(item1);   
     item1->setBrush(QBrush(Qt::blue));
-    thr_blinking = new std::thread (&MainWindow::Blinking, this);
+    axels = new QGraphicsSimpleTextItem ("0");
+    axels->setPos(250,80);
+    scene.addItem(axels);   
+    connect(&qtimer, SIGNAL (timeout()), this, SLOT (Blinking()));
+    qtimer.start (200);
+    //thr_blinking = new std::thread (&MainWindow::Blinking, this);
  
 }
 
@@ -26,11 +32,24 @@ MainWindow::~MainWindow()
 
 void MainWindow::Blinking()
 {
-    while (1) {
+    static bool f = false;
+    if (f) {
         item1->setBrush (QBrush(Qt::black));
-        usleep (200000);
-        item1->setBrush (QBrush(Qt::blue));
-        usleep (200000);
+        f = false;
     }
+    else {
+        item1->setBrush (QBrush(Qt::blue));
+        f = true;        
+    }
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+     item1->setBrush (QBrush(Qt::green));
+     static int axels_i = 0;
+     axels_i++;     
+     axels->setText(QString::number(axels_i));     
+     
 }
 
