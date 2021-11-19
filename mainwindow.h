@@ -21,7 +21,8 @@ class MainWindow : public QMainWindow
     public:
         MainWindow(QWidget *parent = nullptr);
         ~MainWindow();
-        
+    private:
+             void ReceivePacket (void);
     private slots:        
         void Blinking ();
         void on_pushButton_clicked();        
@@ -29,10 +30,16 @@ class MainWindow : public QMainWindow
     private:
         Ui::MainWindow *ui;
         QGraphicsScene scene;
-        //std::thread *thr_blinking;
+        std::thread *thr_net;
         QGraphicsRectItem* item1;
         QTimer qtimer;
+        QGraphicsSimpleTextItem* track_info_i;
         QGraphicsSimpleTextItem* axels;
         
+        udp_crtc *udp_o;
+        volatile atomic <uint> track_info;
+        volatile atomic <float> axels_count;
+        int axels_i = 0;
+        char str_tmp [50];
 };
 #endif // MAINWINDOW_H
