@@ -35,11 +35,12 @@ class MainWindow : public QMainWindow
         QTimer qtimer;
         QGraphicsSimpleTextItem* track_info_i;
         QGraphicsSimpleTextItem* axels;
-        
+        QGraphicsSimpleTextItem* channels_name;
         udp_crtc *udp_o;
-        volatile atomic <uint> track_info;
-        volatile atomic <float> axels_count;
+        atomic <uint> track_info;
+        atomic <float> axels_count;        
         int axels_i = 0;
-        char str_tmp [50];
+        pthread_mutex_t mutex;
+        string channel_name;
 };
 #endif // MAINWINDOW_H

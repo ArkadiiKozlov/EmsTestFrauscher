@@ -14,6 +14,7 @@ SOURCES += \
     udp-s.cpp
 
 HEADERS += \
+    lan.h \
     mainwindow.h \
     udp-s.h
 
