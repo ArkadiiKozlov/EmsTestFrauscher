@@ -5,8 +5,10 @@
 #include <QGraphicsScene>
 #include <QTimer>
 #include <thread>
-
+#include <queue>
+#include "itemems.h"
 #include "udp-s.h"
+
 
 using namespace std;
 
@@ -32,6 +34,7 @@ class MainWindow : public QMainWindow
         QGraphicsScene scene;
         std::thread *thr_net;
         QGraphicsRectItem* item1;
+        ItemEms *item1ems;
         QTimer qtimer;
         QGraphicsSimpleTextItem* track_info_i;
         QGraphicsSimpleTextItem* axels;
@@ -41,6 +44,6 @@ class MainWindow : public QMainWindow
         atomic <float> axels_count;        
         int axels_i = 0;
         pthread_mutex_t mutex;
-        string channel_name;
+        queue <string> channel_name_q;
 };
 #endif // MAINWINDOW_H
