@@ -91,27 +91,20 @@ void MainWindow::Blinking()
     if (!channel_name_q.empty()) {
          channels_name ->setText(channel_name_q.front().c_str());    
          channel_name_q.pop();
-         QString q_tmp = QString::number(channel_name_q.size());
+         //QString q_tmp = QString::number(channel_name_q.size());
          axels->setText(QString::number(channel_name_q.size()));          
          //axels->setText(QString().number(channel_name_q.size()));          
        }
     else {
           channels_name->setText("queue is empty");
     }     
-    track_info_i->setText(QString("%2").arg(track_info,4,16));
+    track_info_i->setText(QString("%1").arg(track_info,4,16));
     pthread_mutex_unlock(&mutex);            
 }
 
 
 void MainWindow::on_pushButton_clicked()
 {
-    item1->setBrush (QBrush(Qt::green));    
-    axels_i++;     
-    axels->setText(QString::number(axels_i));          
-    //track_info_i->setText(str_tmp);     
-    //track_info_i->setText(QString::number(sizeof(int)));
-    
-    
-     
+    item1ems->setBrush (QBrush(Qt::green));             
 }
 

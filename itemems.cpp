@@ -24,6 +24,7 @@ void ItemEms::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     setBrush(QBrush(Qt::red));
     qDebug() << "item pressed.";
+    uc_ptr[3] = 0x80;
     uc_ptr[4] = 0x80;
     udp_->SndPacket(buff_out, sizeof(PacketHead) + 1 + strlen (p_tu->name) + 1  + 5);
 }
@@ -31,6 +32,7 @@ void ItemEms::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void ItemEms::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     setBrush(QBrush(Qt::yellow));
+    uc_ptr[3] = 0x40;
     uc_ptr[4] = 0x40;
     udp_->SndPacket(buff_out, sizeof(PacketHead) + 1 + strlen (p_tu->name) + 1  + 5);
     qDebug() << "item released.";
