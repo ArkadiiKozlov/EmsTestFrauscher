@@ -36,13 +36,14 @@ class MainWindow : public QMainWindow
         QGraphicsRectItem* item1;
         ItemEms *item1ems;
         QTimer qtimer;
-        QGraphicsSimpleTextItem* track_info_i;
         QGraphicsSimpleTextItem* axels;
+        QGraphicsSimpleTextItem* fse_errors;
+        QGraphicsSimpleTextItem* track_info_i;        
         QGraphicsSimpleTextItem* channels_name;
         udp_crtc *udp_o;
         atomic <uint> track_info;
         atomic <float> axels_count;        
-        int axels_i = 0;
+        atomic <float> fse_com_errors;                
         pthread_mutex_t mutex;
         queue <string> channel_name_q;
 };

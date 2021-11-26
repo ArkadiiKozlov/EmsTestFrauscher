@@ -29,15 +29,20 @@ MainWindow::MainWindow(QWidget *parent)
     item1ems->SetMcastTuObj(udp_o);
     
     axels = new QGraphicsSimpleTextItem ("0");
-    axels->setPos(250,80);
+    axels->setPos(50,80);
     scene.addItem(axels);   
     
+    fse_errors = new QGraphicsSimpleTextItem ("0");
+    fse_errors->setPos(50,110);
+    scene.addItem(fse_errors);   
+    
+    
     track_info_i = new QGraphicsSimpleTextItem ("0");
-    track_info_i->setPos(300,80);    
+    track_info_i->setPos(50,140);    
     scene.addItem(track_info_i);   
     
     channels_name  = new QGraphicsSimpleTextItem ("0");
-    channels_name->setPos(50,120);
+    channels_name->setPos(50,170);
     scene.addItem(channels_name);   
     
       connect(&qtimer, SIGNAL (timeout()), this, SLOT (Blinking()));
@@ -71,34 +76,38 @@ void MainWindow::ReceivePacket(void)
                     int index_first = sizeof (PacketHead) + 1 + strlen (ts->name) + 1 + 2 + 2;
                     track_info = *((uint *)(buff_in + index_first));                         
                 }            
+                if (strcmp (ts->name, "Frauscher_TS_TI") == 0) {
+                    int index_first = sizeof (PacketHead) + 1 + strlen (ts->name) + 1 + 2 + 2;                    
+                    memcpy ((void *)&axels_count, buff_in + index_first, 4);                    
+                    memcpy ((void *)&fse_com_errors, buff_in + index_first + 4, 4);                    
+                }            
             } 
         } 
     }
 }
 
 void MainWindow::Blinking()
-{
-    static bool f = false;
-    if ((track_info&0x000000c0) == 0x00000080) {
+{   
+    if ((track_info&0x000000c0) == 0x00000080) 
         item1ems->setBrush (QBrush(Qt::black));
-        f = false;
-    }
-    else {
+    else 
         item1ems->setBrush (QBrush(Qt::blue));
-        f = true;        
-    }
+ 
     pthread_mutex_lock(&mutex);            
     if (!channel_name_q.empty()) {
          channels_name ->setText(channel_name_q.front().c_str());    
          channel_name_q.pop();
          //QString q_tmp = QString::number(channel_name_q.size());
-         axels->setText(QString::number(channel_name_q.size()));          
-         //axels->setText(QString().number(channel_name_q.size()));          
+         //axels->setText(QString::number(channel_name_q.size()));          
+         //axels->setText(QString().number(channel_name_q.size()));         
+         axels->setText(QString("axels: %1").arg((uint)axels_count,0,10));          
+         fse_errors->setText(QString("fse errors: %1").arg((uint)fse_com_errors,0,10));          
+         track_info_i->setText(QString("track states: 0x%1").arg(track_info,4,16));
        }
     else {
           channels_name->setText("queue is empty");
     }     
-    track_info_i->setText(QString("%1").arg(track_info,4,16));
+    
     pthread_mutex_unlock(&mutex);            
 }
 
