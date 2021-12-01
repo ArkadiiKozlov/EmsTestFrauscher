@@ -102,10 +102,15 @@ void MainWindow::Blinking()
          //axels->setText(QString().number(channel_name_q.size()));         
          axels->setText(QString("axels: %1").arg((uint)axels_count,0,10));          
          fse_errors->setText(QString("fse errors: %1").arg((uint)fse_com_errors,0,10));          
-         track_info_i->setText(QString("track states: 0x%1").arg(track_info,4,16));
+         track_info_i->setText(QString("track states: 0x%1").arg(track_info,0,16));
        }
     else {
-          channels_name->setText("queue is empty");
+          static int one_sec_counter = 0;
+          if (one_sec_counter++ > 10) {
+              one_sec_counter = 0;
+              if (channels_name->text() != "queue is empty")
+                  channels_name->setText("queue is empty");
+             }
     }     
     
     pthread_mutex_unlock(&mutex);            
