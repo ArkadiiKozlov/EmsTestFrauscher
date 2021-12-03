@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("EmsTest");
+    scene.setSceneRect(0, 0, 731, 471);
     ui->graphicsView->setScene(&scene);
     scene.setBackgroundBrush(Qt::gray);   
     /*
@@ -22,7 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     item1->setBrush(QBrush(Qt::blue));
     */
     item1ems = new ItemEms (); 	
-    item1ems->setRect(50,50,400,25);
+    //item1ems->setRect(50,50,400,25);
+    item1ems->setRect(0,0,50,50);
     scene.addItem(item1ems);   
     item1ems->setBrush(QBrush(Qt::blue));
     udp_o = new Multicast (14350, true, "224.1.1.1");

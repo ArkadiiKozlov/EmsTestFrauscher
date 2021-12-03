@@ -24,7 +24,7 @@ class MainWindow : public QMainWindow
         MainWindow(QWidget *parent = nullptr);
         ~MainWindow();
     private:
-             void ReceivePacket (void);
+             void ReceivePacket (void);           
     private slots:        
         void Blinking ();
         void on_pushButton_clicked();        
@@ -45,6 +45,7 @@ class MainWindow : public QMainWindow
         atomic <float> axels_count;        
         atomic <float> fse_com_errors;                
         pthread_mutex_t mutex;
-        queue <string> channel_name_q;
+        queue <string> channel_name_q;        
+        
 };
 #endif // MAINWINDOW_H
