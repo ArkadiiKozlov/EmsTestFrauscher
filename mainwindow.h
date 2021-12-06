@@ -32,6 +32,7 @@ class MainWindow : public QMainWindow
     private:
         Ui::MainWindow *ui;
         QGraphicsScene scene;
+        QGraphicsScene scene2;
         std::thread *thr_net;
         QGraphicsRectItem* item1;
         ItemEms *item1ems;

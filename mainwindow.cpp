@@ -13,9 +13,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("EmsTest");
-    scene.setSceneRect(0, 0, 731, 471);
+    scene.setSceneRect(0, 0, 671, 401);
     ui->graphicsView->setScene(&scene);
     scene.setBackgroundBrush(Qt::gray);   
+    
+    scene2.setSceneRect(0, 0, 671, 401);
+    ui->graphicsView_2->setScene(&scene2);
+    scene2.setBackgroundBrush(Qt::black);   
     /*
     item1 = new QGraphicsRectItem(50,50,400,25); 	
     //item1 = new QGraphicsRectItem(-100,-100,400,25); 	
@@ -24,27 +28,27 @@ MainWindow::MainWindow(QWidget *parent)
     */
     item1ems = new ItemEms (); 	
     //item1ems->setRect(50,50,400,25);
-    item1ems->setRect(0,0,50,50);
+    item1ems->setRect(130,100,400,25);
     scene.addItem(item1ems);   
     item1ems->setBrush(QBrush(Qt::blue));
     udp_o = new Multicast (14350, true, "224.1.1.1");
     item1ems->SetMcastTuObj(udp_o);
     
     axels = new QGraphicsSimpleTextItem ("0");
-    axels->setPos(50,80);
+    axels->setPos(130,130);
     scene.addItem(axels);   
     
     fse_errors = new QGraphicsSimpleTextItem ("0");
-    fse_errors->setPos(50,110);
+    fse_errors->setPos(130,160);
     scene.addItem(fse_errors);   
     
     
     track_info_i = new QGraphicsSimpleTextItem ("0");
-    track_info_i->setPos(50,140);    
+    track_info_i->setPos(130,190);    
     scene.addItem(track_info_i);   
     
     channels_name  = new QGraphicsSimpleTextItem ("0");
-    channels_name->setPos(50,170);
+    channels_name->setPos(130,220);
     scene.addItem(channels_name);   
     
       connect(&qtimer, SIGNAL (timeout()), this, SLOT (Blinking()));
